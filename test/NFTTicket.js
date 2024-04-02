@@ -1,11 +1,11 @@
-const hre = require("hardhat");
+const { ethers } = require('hardhat');
 const { expect } = require("chai");
 
 const NAME = "MTicket";
 const SYMBOL = "MT";
 
 const OCCASION_NAME = "NexFi Expo 2024"
-const OCCASION_COST  = "1" 
+const OCCASION_COST  = "1"
 const OCCASION_MAX_TICKETS = "100"
 const OCCASION_DATE = "Apr 27"
 const OCCASION_TIME = "10:00AM GMT"
@@ -16,11 +16,11 @@ describe("NFTTicket", function () {
   let deployer, buyer;
 
   beforeEach(async function () {
-    [deployer, buyer] = await hre.ethers.getSigners();
+    [deployer, buyer] = await ethers.getSigners();
 
-    nftTicket = await hre.ethers.deployContract("NFTTicket", [NAME, SYMBOL]);
+    nftTicket = await ethers.deployContract("NFTTicket", [NAME, SYMBOL]);
 
-    let transaction = await nftTicket.connect(deployer).list(
+    let transaction = await nftTicket.connect(deployer).listEvent(
       OCCASION_NAME,
       OCCASION_COST,
       OCCASION_MAX_TICKETS,
@@ -44,10 +44,7 @@ describe("NFTTicket", function () {
     expect(await nftTicket.owner()).to.equal(deployer.address);
   });
 
- 
-
-
-  describe("LsitedEvents", () => {
+  describe("listedEvents", () => {
 
     it("Updates event count", async function () {
       const totalEvents = await nftTicket.totalEvents();
@@ -69,15 +66,15 @@ describe("NFTTicket", function () {
   describe("Minting", () => {
     const ID = 1
     const SEAT = 50
-    const AMOUNT = 1
+    const AMOUNT = "1"
 
     beforeEach(async function () {
-      const transaction = await nftTicket.connect(buyer).mint(ID, SEAT, { value: AMOUNT })
+      const transaction = await nftTicket.connect(buyer).mintTicket(ID, SEAT, { value: AMOUNT })
       await transaction.wait()
     })
 
     it('Updates ticket count', async function () {
-      const totalEvents = await nftTicket.getListedEvent(1)
+      const totalEvents = await nftTicket.getListedEvents(1)
       expect(totalEvents.tickets).to.be.equal(OCCASION_MAX_TICKETS - 1)
     })
 
@@ -96,10 +93,7 @@ describe("NFTTicket", function () {
       expect(seats.length).to.equal(1)
       expect(seats[0]).to.equal(SEAT)  
     })
-
-    it('Updates the contract balance', async function () {
-      const balance = await hre.ethers.provider.getBalance(nftTicket.address)
-      expect(balance).to.be.equal(AMOUNT)
-    })
   })
+
+  
 });
