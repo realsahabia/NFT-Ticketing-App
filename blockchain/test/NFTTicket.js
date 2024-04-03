@@ -4,12 +4,12 @@ const { expect } = require("chai");
 const NAME = "MTicket";
 const SYMBOL = "MT";
 
-const OCCASION_NAME = "NexFi Expo 2024"
-const OCCASION_COST  = "1"
-const OCCASION_MAX_TICKETS = "100"
-const OCCASION_DATE = "Apr 27"
-const OCCASION_TIME = "10:00AM GMT"
-const OCCASION_LOCATION = "Accra, Ghana"
+const EVENT_NAME = "NexFi Expo 2024"
+const EVENT_COST  = "1"
+const EVENT_MAX_TICKETS = "100"
+const EVENT_DATE = "Apr 27"
+const EVENT_TIME = "10:00AM GMT"
+const EVENT_LOCATION = "Accra, Ghana"
 
 describe("NFTTicket", function () {
   let nftTicket;
@@ -21,12 +21,12 @@ describe("NFTTicket", function () {
     nftTicket = await ethers.deployContract("NFTTicket", [NAME, SYMBOL]);
 
     let transaction = await nftTicket.connect(deployer).listEvent(
-      OCCASION_NAME,
-      OCCASION_COST,
-      OCCASION_MAX_TICKETS,
-      OCCASION_DATE,
-      OCCASION_TIME,
-      OCCASION_LOCATION
+      EVENT_NAME,
+      EVENT_COST,
+      EVENT_MAX_TICKETS,
+      EVENT_DATE,
+      EVENT_TIME,
+      EVENT_LOCATION
     )
 
     await transaction.wait()
@@ -54,12 +54,12 @@ describe("NFTTicket", function () {
     it('Returns listedEvent attributes', async function () {
       const totalEvents = await nftTicket.getListedEvents(1)
       expect(totalEvents.id).to.be.equal(1)
-      expect(totalEvents.name).to.be.equal(OCCASION_NAME)
-      expect(totalEvents.cost).to.be.equal(OCCASION_COST)
-      expect(totalEvents.tickets).to.be.equal(OCCASION_MAX_TICKETS)
-      expect(totalEvents.date).to.be.equal(OCCASION_DATE)
-      expect(totalEvents.time).to.be.equal(OCCASION_TIME)
-      expect(totalEvents.location).to.be.equal(OCCASION_LOCATION)
+      expect(totalEvents.name).to.be.equal(EVENT_NAME)
+      expect(totalEvents.cost).to.be.equal(EVENT_COST)
+      expect(totalEvents.tickets).to.be.equal(EVENT_MAX_TICKETS)
+      expect(totalEvents.date).to.be.equal(EVENT_DATE)
+      expect(totalEvents.time).to.be.equal(EVENT_TIME)
+      expect(totalEvents.location).to.be.equal(EVENT_LOCATION)
     })
   })
 
@@ -75,7 +75,7 @@ describe("NFTTicket", function () {
 
     it('Updates ticket count', async function () {
       const totalEvents = await nftTicket.getListedEvents(1)
-      expect(totalEvents.tickets).to.be.equal(OCCASION_MAX_TICKETS - 1)
+      expect(totalEvents.tickets).to.be.equal(EVENT_MAX_TICKETS - 1)
     })
 
     it('Updates buying status', async function () {
