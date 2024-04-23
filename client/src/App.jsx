@@ -19,6 +19,8 @@ const [provider, setProvider] = useState(null)
 
 const [NFTTicketContract, setNFTTicketContract]  = useState(null)
 const [events, setEvents] = useState([])
+const [occasion, setOccasion] = useState({})
+const [toggle, setToggle] = useState(false)
 
 
 const loadBlockchainData = async () => {
@@ -36,94 +38,43 @@ const loadBlockchainData = async () => {
     // Load contract data
     let currentProvider = provider;
     if (!currentProvider) {
-      currentProvider = new ethers.providers.Web3Provider(window.ethereum);
+      currentProvider = new ethers.BrowserProvider(window.ethereum);
       setProvider(currentProvider);
     }
 
     const network = await currentProvider.getNetwork();
     console.log("Current Network is " + network.name);
+
     const contractAddress = config[31337].NFTTicket.address;
     const NFTTicketContract = new ethers.Contract(contractAddress, NFTTicket_abi, currentProvider);
-    console.log("Token master contract", NFTTicketContract);
+    // console.log("Token master contract", NFTTicketContract);
     
     // Set NFTTicketContract state
     setNFTTicketContract(NFTTicketContract);
 
+    const avaiEvents = await NFTTicketContract.totalEvents();
+    // console.log({avaiEvents: avaiEvents.toString()})
+
+    const eventsList = [];
+
+    for (let i = 0; i <= avaiEvents; i++){
+      const singleEvent = await NFTTicketContract.getListedEvents(i);
+      eventsList.push(singleEvent)
+    }
+
+    setEvents(eventsList);
+    console.log(eventsList)
     // List events
-    await listEvents(NFTTicketContract);
   } catch (error) {
     console.error("Error loading blockchain data:", error);
   }
 };
 
-const listEvents = async (contract) => {
-  // Define the tokens function here or import it
-  const ONE_GWEI = BigInt(1_000_000_000);
 
-  const tokens = (n) => {
-    return n * ONE_GWEI;
-  }
-
-  const eventsToAdd = [
-    {
-      name: "NexFi Expo 2024",
-      cost: tokens(3),
-      tickets: 0,
-      date: "May 31",
-      time: "6:00PM GMT",
-      location: "Accra, Ghana"
-    },
-    {
-      name: "Experience Expo",
-      cost: tokens(1),
-      tickets: 125,
-      date: "Jun 2",
-      time: "1:00PM GMT",
-      location: "Tokyo, Japan"
-    },
-    {
-      name: "ETHDev Hackathon",
-      cost: tokens(0.25),
-      tickets: 200,
-      date: "Jun 9",
-      time: "10:00AM TRT",
-      location: "Turkey, Istanbul"
-    },
-    {
-      name: "Web3 Lagos",
-      cost: tokens(5),
-      tickets: 0,
-      date: "Jun 11",
-      time: "2:30PM GMT+1",
-      location: "Lagos, Nigeria"
-    },
-    {
-      name: "ETH Global Toronto",
-      cost: tokens(1.5),
-      tickets: 125,
-      date: "Jun 23",
-      time: "11:00AM EST",
-      location: "Toronto, Canada"
-    }
-  ];
-
-  for (let i = 0; i < eventsToAdd.length; i++) {
-    await contract.listEvent(
-      eventsToAdd[i].name,
-      eventsToAdd[i].cost,
-      eventsToAdd[i].tickets,
-      eventsToAdd[i].date,
-      eventsToAdd[i].time,
-      eventsToAdd[i].location
-    );
-
-    console.log(`Listed Event ${i + 1}: ${eventsToAdd[i].name}`);
-  }
-};
 
   useEffect(() =>{
    loadBlockchainData();
-  },  []);
+  }, []);
 
   return (
     <div>
@@ -134,8 +85,18 @@ const listEvents = async (contract) => {
 
         <div className='card'>
           {events.map((item, index) =>(
-            <p key={index}>{item.name}</p>
-          ))}
+            <Card
+            event={item}
+            id={index + 1}
+            contract={NFTTicketContract}
+            provider={provider}
+            account={account}
+            toggle={toggle}
+            setToggle={setToggle}
+            setOccasion={setOccasion}
+            key={index}
+          />
+        ))}
         </div>
 
     </div>

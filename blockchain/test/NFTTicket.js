@@ -5,8 +5,8 @@ const NAME = "MTicket";
 const SYMBOL = "MT";
 
 const EVENT_NAME = "NexFi Expo 2024"
-const EVENT_COST  = "1"
-const EVENT_MAX_TICKETS = "100"
+const EVENT_COST  = ethers.parseEther("1"); // Event cost in ETH
+const EVENT_MAX_TICKETS = 100
 const EVENT_DATE = "Apr 27"
 const EVENT_TIME = "10:00AM GMT"
 const EVENT_LOCATION = "Accra, Ghana"
@@ -66,7 +66,7 @@ describe("NFTTicket", function () {
   describe("Minting", () => {
     const ID = 1
     const SEAT = 50
-    const AMOUNT = "1"
+    const AMOUNT = ethers.parseEther("1")
 
     beforeEach(async function () {
       const transaction = await nftTicket.connect(buyer).mintTicket(ID, SEAT, { value: AMOUNT })
@@ -93,7 +93,37 @@ describe("NFTTicket", function () {
       expect(seats.length).to.equal(1)
       expect(seats[0]).to.equal(SEAT)  
     })
+
+    it('Updates the contract balance', async () => {
+      const balance = await ethers.provider.getBalance(nftTicket)
+      expect(balance).to.be.equal(AMOUNT)
+    })
   })
 
-  
+  describe("Withdrawing", () => {
+    const ID = 1
+    const SEAT = 50
+    const AMOUNT = ethers.parseEther("1")
+    let balanceBefore
+
+    beforeEach(async () => {
+      balanceBefore = await ethers.provider.getBalance(nftTicket)
+
+      let transaction = await nftTicket.connect(buyer).mintTicket(ID, SEAT, { value: AMOUNT })
+      await transaction.wait()
+
+      transaction = await nftTicket.connect(deployer).withdraw()
+      await transaction.wait()
+    })
+
+    it('Updates the owner balance', async () => {
+      const balanceAfter = await ethers.provider.getBalance(deployer)
+      expect(balanceAfter).to.be.greaterThan(balanceBefore)
+    })
+
+    it('Updates the contract balance', async () => {
+      const balance = await ethers.provider.getBalance(nftTicket)
+      expect(balance).to.equal(0)
+    })
+  })
 });

@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 const tokens = (n) => {
-  return hre.ethers.utils.parseUnits(n.toString(), 'ether');
+  return hre.ethers.parseEther(n);
 };
 
 async function main() {
@@ -13,15 +13,14 @@ async function main() {
   // Deploy contract
   const NFTTicket = await hre.ethers.getContractFactory("NFTTicket");
   const nftTicket = await NFTTicket.deploy(NAME, SYMBOL);
-  await nftTicket.deployed();
-
+  // await nftTicket.deployed();
   console.log(`Deployed  Contract at: ${nftTicket.address}\n`);
 
   // List 5 events
   const events = [
     {
       name: "NexFi Expo 2024",
-      cost: tokens(3),
+      cost: tokens("3"),
       tickets: 0,
       date: "May 31",
       time: "6:00PM GMT",
@@ -29,7 +28,7 @@ async function main() {
     },
     {
       name: "Experience Expo",
-      cost: tokens(1),
+      cost: tokens("1"),
       tickets: 125,
       date: "Jun 2",
       time: "1:00PM GMT",
@@ -37,7 +36,7 @@ async function main() {
     },
     {
       name: "ETHDev Hackathon",
-      cost: tokens(0.25),
+      cost: tokens("0.25"),
       tickets: 200,
       date: "Jun 9",
       time: "10:00AM TRT",
@@ -45,7 +44,7 @@ async function main() {
     },
     {
       name: "Web3 Lagos",
-      cost: tokens(5),
+      cost: tokens("5"),
       tickets: 0,
       date: "Jun 11",
       time: "2:30PM GMT+1",
@@ -53,7 +52,7 @@ async function main() {
     },
     {
       name: "ETH Global Toronto",
-      cost: tokens(1.5),
+      cost: tokens("1.5"),
       tickets: 125,
       date: "Jun 23",
       time: "11:00AM EST",
