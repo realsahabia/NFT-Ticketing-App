@@ -1,9 +1,11 @@
 import React from 'react'
 import { ethers } from 'ethers'
+import "./Card.css"
 
-const Card = ({ event, toggle, setToggle, setevent }) => {
+const Card = ({ event, toggle, setToggle, setOccasion }) => {
+  
   const togglePop = () => {
-    setevent(event)
+    setOccasion(event)
     toggle ? setToggle(false) : setToggle(true)
   }
 
@@ -25,8 +27,7 @@ const Card = ({ event, toggle, setToggle, setevent }) => {
         <p className='card__cost'>
           <strong>
             {ethers.formatEther(event.cost)}
-          </strong>
-          ETH
+          </strong>ETH
         </p>
 
         {event.tickets.toString() === "0" ? (
@@ -47,7 +48,6 @@ const Card = ({ event, toggle, setToggle, setevent }) => {
           </button>
         )}
       </div>
-
       <hr />
     </div >
   );

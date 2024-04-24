@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 
 // Import Components
-import Seat from './Seat'
+import Seat from '../seat/Seat'
 
 // Import Assets
-import close from '../assets/close.svg'
+import close from '../../assets/close.svg'
 
-const SeatChart = ({ occasion, tokenMaster, provider, setToggle }) => {
+const SeatChart = ({ event, contract, provider, setToggle }) => {
   const [seatsTaken, setSeatsTaken] = useState(false)
   const [hasSold, setHasSold] = useState(false)
 
   const getSeatsTaken = async () => {
-    const seatsTaken = await tokenMaster.getSeatsTaken(occasion.id)
+    const seatsTaken = await contract.getSeatsTaken(event.id)
     setSeatsTaken(seatsTaken)
   }
 
@@ -19,7 +19,7 @@ const SeatChart = ({ occasion, tokenMaster, provider, setToggle }) => {
     setHasSold(false)
 
     const signer = await provider.getSigner()
-    const transaction = await tokenMaster.connect(signer).mint(occasion.id, _seat, { value: occasion.cost })
+    const transaction = await contract.connect(signer).mintTicket(event.id, _seat, { value: event.cost })
     await transaction.wait()
 
     setHasSold(true)
@@ -32,7 +32,7 @@ const SeatChart = ({ occasion, tokenMaster, provider, setToggle }) => {
   return (
     <div className="occasion">
       <div className="occasion__seating">
-        <h1>{occasion.name} Seating Map</h1>
+        <h1>{event.name} Seating Map</h1>
 
         <button onClick={() => setToggle(false)} className="occasion__close">
           <img src={close} alt="Close" />
@@ -60,7 +60,7 @@ const SeatChart = ({ occasion, tokenMaster, provider, setToggle }) => {
           <strong>WALKWAY</strong>
         </div>
 
-        {seatsTaken && Array(Number(occasion.maxTickets) - 50).fill(1).map((e, i) =>
+        {seatsTaken && Array(Number(event.maxTickets) - 50).fill(1).map((e, i) =>
           <Seat
             i={i}
             step={26}
@@ -81,7 +81,7 @@ const SeatChart = ({ occasion, tokenMaster, provider, setToggle }) => {
         {seatsTaken && Array(25).fill(1).map((e, i) =>
           <Seat
             i={i}
-            step={(Number(occasion.maxTickets) - 24)}
+            step={(Number(event.maxTickets) - 24)}
             columnStart={22}
             maxColumns={5}
             rowStart={2}

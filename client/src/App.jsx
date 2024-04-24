@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 
 // Components
-import Navigation from './components/Navigation'
-// import Sort from './components/Sort'
-import Card from './components/Card'
-// import SeatChart from './components/SeatChart'
+import Navigation from './components/navigation/Navigation'
+import Sort from './components/sort/Sort'
+import Card from './components/card/Card'
+import SeatChart from './components/seatchart/SeatChart'
 
 // ABIs
 import NFTTicket_abi from './abis/NFTTicket.json'
@@ -57,7 +57,7 @@ const loadBlockchainData = async () => {
 
     const eventsList = [];
 
-    for (let i = 0; i <= avaiEvents; i++){
+    for (let i = 1; i <= avaiEvents; i++){
       const singleEvent = await NFTTicketContract.getListedEvents(i);
       eventsList.push(singleEvent)
     }
@@ -82,7 +82,7 @@ const loadBlockchainData = async () => {
           <Navigation account={account} setAccount={setAccount}/>
           <h2 className="header__title"><strong>Available</strong> Events</h2>
         </header>
-
+        <Sort />
         <div className='card'>
           {events.map((item, index) =>(
             <Card
@@ -98,6 +98,15 @@ const loadBlockchainData = async () => {
           />
         ))}
         </div>
+
+        {toggle && (
+            <SeatChart 
+              event= {occasion}
+              contract={NFTTicketContract}
+              provider={provider}
+              setToggle={setToggle}
+            />
+        )}
 
     </div>
   );

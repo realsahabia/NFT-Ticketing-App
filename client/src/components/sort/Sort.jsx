@@ -1,5 +1,7 @@
+import React from 'react';
+import "./Sort.css"
 // Assets
-import down from '../assets/angle-down-solid.svg'
+import down from '../../assets/angle-down-solid.svg'
 
 const Sort = () => {
   return (

@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import "./Navigation.css"
 
 const Navigation = ({ account, setAccount }) => {
   const connectHandler = async () => {
@@ -9,7 +10,7 @@ const Navigation = ({ account, setAccount }) => {
   return (
     <nav>
       <div className='nav__brand'>
-        <h1>tokenmaster</h1>
+        <h1>Onchain Events</h1>
 
         <input className='nav__search' type="text" placeholder='Find millions of experiences' />
 
