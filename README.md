@@ -28,10 +28,10 @@ To use this code, follow these steps:
 3. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
-4. Access the dApp in your web browser at `http://localhost:3000`.
+4. Access the dApp in your web browser at `http://localhost:5173`.
 
 ## Technologies Used
 
@@ -39,6 +39,7 @@ To use this code, follow these steps:
 - Solidity: Programming language for writing smart contracts.
 - Hardhat: Ethereum development environment for compiling, testing, and deploying smart contracts.
 - React.js: JavaScript library for building user interfaces.
+- Vite: Fast build tool for modern web development with support for React, Vue, and more.
 - ethers.js: Ethereum JavaScript library for interacting with smart contracts.
 - MetaMask: Ethereum wallet browser extension for interacting with decentralized applications.
 
