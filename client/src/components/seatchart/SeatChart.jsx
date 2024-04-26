@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
-
+import {ethers} from "ethers";
 // Import Components
 import Seat from '../seat/Seat'
 
 // Import Assets
 import close from '../../assets/close.svg'
+
+import CAddress from '../../config'
+import CABI from '../../abis/NFTTicket.json'
 
 const SeatChart = ({ event, contract, provider, setToggle }) => {
   const [seatsTaken, setSeatsTaken] = useState(false)
@@ -19,7 +22,11 @@ const SeatChart = ({ event, contract, provider, setToggle }) => {
     setHasSold(false)
 
     const signer = await provider.getSigner()
-    const transaction = await contract.connect(signer).mintTicket(event.id, _seat, { value: event.cost })
+    const contractAddress = CAddress[31337].NFTTicket.address
+    const blockData = new ethers.Contract(contractAddress, CABI, signer)
+    // const transaction = await contract.connect(signer).mintTicket(event.id, _seat, { value: event.cost })
+    console.log(blockData)
+    const transaction = await blockData.mintTicket(event.id, _seat, { value: event.cost })
     await transaction.wait()
 
     setHasSold(true)
@@ -31,14 +38,14 @@ const SeatChart = ({ event, contract, provider, setToggle }) => {
 
   return (
     <div className="occasion">
-      <div className="occasion__seating">
+      <div className="occasion-seating">
         <h1>{event.name} Seating Map</h1>
 
-        <button onClick={() => setToggle(false)} className="occasion__close">
+        <button onClick={() => setToggle(false)} className="occasion-close">
           <img src={close} alt="Close" />
         </button>
 
-        <div className="occasion__stage">
+        <div className="occasion-stage">
           <strong>STAGE</strong>
         </div>
 
@@ -56,7 +63,7 @@ const SeatChart = ({ event, contract, provider, setToggle }) => {
           />
         )}
 
-        <div className="occasion__spacer--1 ">
+        <div className="occasion-spacer--1 ">
           <strong>WALKWAY</strong>
         </div>
 
@@ -74,7 +81,7 @@ const SeatChart = ({ event, contract, provider, setToggle }) => {
           />
         )}
 
-        <div className="occasion__spacer--2">
+        <div className="occasion-spacer--2">
           <strong>WALKWAY</strong>
         </div>
 

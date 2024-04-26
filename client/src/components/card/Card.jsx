@@ -11,20 +11,20 @@ const Card = ({ event, toggle, setToggle, setOccasion }) => {
 
   return (
     <div className='card'>
-      <div className='card__info'>
-        <p className='card__date'>
+      <div className='card-info'>
+        <p className='card-date'>
           <strong>{event.date}</strong><br />{event.time}
         </p>
 
-        <h3 className='card__name'>
+        <h3 className='card-name'>
           {event.name}
         </h3>
 
-        <p className='card__location'>
+        <p className='card-location'>
           <small>{event.location}</small>
         </p>
 
-        <p className='card__cost'>
+        <p className='card-cost'>
           <strong>
             {ethers.formatEther(event.cost)}
           </strong>ETH
@@ -33,7 +33,7 @@ const Card = ({ event, toggle, setToggle, setOccasion }) => {
         {event.tickets.toString() === "0" ? (
           <button
             type="button"
-            className='card__button--out'
+            className='card-button--out'
             disabled
           >
             Sold Out
@@ -41,7 +41,7 @@ const Card = ({ event, toggle, setToggle, setOccasion }) => {
         ) : (
           <button
             type="button"
-            className='card__button'
+            className='card-button'
             onClick={() => togglePop()}
           >
             View Seats

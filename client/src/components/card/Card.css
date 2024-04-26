@@ -14,7 +14,7 @@
     transition: all 250ms ease;
   }
   
-  .card__info {
+  .card-info {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -27,20 +27,20 @@
     transition: 250ms ease all;
   }
   
-  .card__info:hover {
+  .card-info:hover {
     background: rgba(18, 90, 198, 0.2);
   }
   
   
-  .card__info p small {
+  .card-info p small {
     font-size: clamp(0.80rem, 2vw, 0.90rem);
   }
   
-  .card__info p small span {
+  .card-info p small span {
     font-weight: 700;
   }
   
-  .card__date {
+  .card-date {
     grid-column: 1 / span 2;
     grid-row: 1 / span 2;
     place-self: center;
@@ -49,7 +49,7 @@
     font-weight: 300;
   }
   
-  .card__name {
+  .card-name {
     grid-column: 3 / span 6;
     grid-row: 1;
     place-self: center;
@@ -62,7 +62,7 @@
     text-align: center;
   }
   
-  .card__location {
+  .card-location {
     grid-column: 3 / span 6;
     grid-row: 2;
     place-self: center;
@@ -74,7 +74,7 @@
     text-align: center;
   }
   
-  .card__cost {
+  .card-cost {
     grid-column: 9 / span 1;
     grid-row: 1 / span 2;
     place-self: center;
@@ -83,15 +83,15 @@
     font-weight: 300;
   }
   
-  .card__cost strong {
+  .card-cost strong {
     font-family: "Open Sans";
     font-size: clamp(1.10rem, 3vw, 1.50rem);
     font-weight: 700;
     margin: 0;
   }
   
-  .card__button,
-  .card__button--out {
+  .card-button,
+  .card-button--out {
     grid-column: 10 / span 3;
     grid-row: 1 / span 2;
     place-self: center;
@@ -114,15 +114,15 @@
     transition: all 250ms ease;
   }
   
-  .card__button:hover {
+  .card-button:hover {
     background-color: var(--clr-dark-blue);
   }
   
-  .card__button:hover .card__button {
+  .card-button:hover .card-button {
     border-color: var(--clr-grey-2);
   }
   
-  .card__button--out {
+  .card-button--out {
     background-color: #BA1840;
   }
   

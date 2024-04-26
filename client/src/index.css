@@ -7,13 +7,13 @@
 }
 
 :root {
-  --clr-white: #FFFFFF;
+  --clr-white: #FFA500;
   --clr-black: #000000;
   --clr-grey: #2b2727;
   --clr-grey-2: #2b2727;
 
-  --clr-dark-blue: #0237AB;
-  --clr-light-blue: #125AC6;
+  --clr-dark-blue: #1b2f69;
+  --clr-light-blue: #020617;
 }
 
 body {
@@ -39,7 +39,7 @@ header {
   position: relative;
 }
 
-.header__title {
+.header-title {
   color: var(--clr-white);
 
   position: absolute;
@@ -67,7 +67,7 @@ header {
     transform: translate(-50%, -50%);
   }
   
-  .occasion__seating {
+  .occasion-seating {
     display: grid;
     gap: 5px;
     grid-template-columns: repeat(25, 1fr);
@@ -90,7 +90,7 @@ header {
     overflow-x: scroll;
   }
   
-  .occasion__seating h1 {
+  .occasion-seating h1 {
     grid-column: 1 / span 27;
     grid-row: 1;
   
@@ -98,7 +98,7 @@ header {
     font-weight: 300;
   }
   
-  .occasion__close {
+  .occasion-close {
     grid-column: 27 / span 1;
     grid-row: 1;
   
@@ -114,19 +114,19 @@ header {
     transition: 250ms ease all;
   }
   
-  .occasion__close:hover {
+  .occasion-close:hover {
     background: rgba(255, 255, 255, 1);
     border: 1px solid var(--clr-white);
   }
   
-  .occasion__close img {
+  .occasion-close img {
     width: 25px;
     height: 25px;
   }
   
-  .occasion__stage,
-  .occasion__spacer--1,
-  .occasion__spacer--2 {
+  .occasion-stage,
+  .occasion-spacer--1,
+  .occasion-spacer--2 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +135,7 @@ header {
     color: var(--clr-white);
   }
   
-  .occasion__stage {
+  .occasion-stage {
     grid-column: 1 / span 27;
     grid-row: 2;
   
@@ -145,26 +145,26 @@ header {
     border-radius: 0 0 24px 24px;
   }
   
-  .occasion__spacer--1,
-  .occasion__spacer--2 {
+  .occasion-spacer--1,
+  .occasion-spacer--2 {
     min-width: 30px;
     margin: 0 5px;
     border: 1px solid black;
     writing-mode: vertical-lr;
   }
   
-  .occasion__spacer--1 {
+  .occasion-spacer--1 {
     grid-column: 6 / span 1;
     grid-row: 3 / span 10;
   }
   
-  .occasion__spacer--2 {
+  .occasion-spacer--2 {
     grid-column: 22 / span 1;
     grid-row: 3 / span 10;
   }
   
-  .occasion__seats,
-  .occasion__seats--taken {
+  .occasion-seats,
+  .occasion-seats--taken {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,7 +184,7 @@ header {
     transition: 250ms ease all;
   }
   
-  .occasion__seats:hover {
+  .occasion-seats:hover {
     background: var(--clr-white);
     color: var(--clr-black);
   
@@ -192,7 +192,7 @@ header {
     font-weight: 700;
   }
   
-  .occasion__seats--taken {
+  .occasion-seats--taken {
     background-color: rgba(34, 64, 109, 0.7);
   }
   
@@ -204,25 +204,25 @@ header {
       grid-template-columns: repeat(2, 1fr);
     }
   
-    .nav__brand {
+    .nav-brand {
       grid-column: 1;
     }
   
-    .nav__links {
+    .nav-links {
       display: none;
     }
   }
   
   @media screen and (max-width: 768px) {
-    .nav__search {
+    .nav-search {
       display: none;
     }
   
-    .nav__brand {
+    .nav-brand {
       padding: 30px 50px;
     }
   
-    .nav__connect {
+    .nav-connect {
       margin: 0 50px 0 auto;
     }
   }
@@ -232,19 +232,19 @@ header {
       height: 100px;
     }
   
-    .card__info {
+    .card-info {
       padding: 0;
     }
   
-    .card__name {
+    .card-name {
       grid-column: 3 / span 7;
     }
   
-    .card__location {
+    .card-location {
       grid-column: 3 / span 7;
     }
   
-    .card__cost {
+    .card-cost {
       grid-column: 10 / span 3;
       grid-row: 1 / span 2;
       place-self: flex-start;
@@ -253,7 +253,7 @@ header {
       margin-top: 20px;
     }
   
-    .card__button {
+    .card-button {
       grid-column: 10 / span 3;
       grid-row: 2 / span 2;
       place-self: center;

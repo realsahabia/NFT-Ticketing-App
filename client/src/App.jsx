@@ -22,19 +22,23 @@ const [events, setEvents] = useState([])
 const [occasion, setOccasion] = useState({})
 const [toggle, setToggle] = useState(false)
 
+const connectHandler = async () => {
+  // Fetch accounts
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  setAccount(accounts[0]);
+
+  // Refresh account
+  window.ethereum.on('accountsChanged', async () => {
+    const updatedAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    setAccount(updatedAccounts[0]);
+  });
+
+  loadBlockchainData();
+}
 
 const loadBlockchainData = async () => {
   try {
-    // Fetch accounts
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    setAccount(accounts[0]);
-
-    // Refresh account
-    window.ethereum.on('accountsChanged', async () => {
-      const updatedAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setAccount(updatedAccounts[0]);
-    });
-
+  
     // Load contract data
     let currentProvider = provider;
     if (!currentProvider) {
@@ -72,15 +76,15 @@ const loadBlockchainData = async () => {
 
 
 
-  useEffect(() =>{
-   loadBlockchainData();
-  }, []);
+  // useEffect(() =>{
+  //  loadBlockchainData();
+  // }, []);
 
   return (
     <div>
         <header>
-          <Navigation account={account} setAccount={setAccount}/>
-          <h2 className="header__title"><strong>Available</strong> Events</h2>
+          <Navigation account={account} setAccount={setAccount} provider={provider} contract={NFTTicketContract} connectHandler={connectHandler}/>
+          <h2 className="header-title"><strong>Available</strong> Events</h2>
         </header>
         <Sort />
         <div className='card'>
